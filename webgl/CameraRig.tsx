@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { useStore } from '@/lib/store'
+import { normalizeRoute } from '@/lib/base-path'
 import { roomByPath, type Room } from '@/lib/rooms'
 
 const easeScroll = (p: number) => p * p * (3 - 2 * p) // smoothstep
@@ -24,7 +25,9 @@ export function CameraRig() {
   const camera = useThree((s) => s.camera)
 
   const rig = useRef({
-    toRoom: roomByPath(typeof window !== 'undefined' ? window.location.pathname : '/'),
+    toRoom: roomByPath(
+      normalizeRoute(typeof window !== 'undefined' ? window.location.pathname : '/')
+    ),
     fromPos: new THREE.Vector3(),
     fromLook: new THREE.Vector3(),
     curPos: new THREE.Vector3(),

@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { frame } from '@/lib/frame'
+import { normalizeRoute } from '@/lib/base-path'
 import { useStore } from '@/lib/store'
 import { WebGLCanvas } from '@/webgl/Canvas'
 import { Nav } from '@/components/Nav'
@@ -41,7 +42,7 @@ export function ClientShell({ children }: { children: ReactNode }) {
   }, [setLenis, setScrollProgress])
 
   useEffect(() => {
-    setRoute(pathname)
+    setRoute(normalizeRoute(pathname))
     // 换房间：滚动立即归零，新房间从驻留机位开始
     const lenis = useStore.getState().lenis
     lenis?.scrollTo(0, { immediate: true })
