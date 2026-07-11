@@ -2,6 +2,9 @@
 
 全站共享一个 3D 世界，路由切换 = 相机运镜。Next.js 15 + R3F 9 + Lenis + GSAP + zustand，pnpm。
 
+- 仓库：https://github.com/shushuitie2017/luniverse
+- Demo：https://shushuitie2017.github.io/luniverse/ （GitHub Actions 自动部署，push main 即发）
+
 ## 现状
 
 - **M1 ✅** 灰盒三联动实测：3 路由 = 3 段贝塞尔弧线运镜、滚动推轨、前进后退倒放、深链接硬切、60fps
