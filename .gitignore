@@ -1,0 +1,9 @@
+node_modules/
+.next/
+out/
+tools/out/
+docs/
+*.tsbuildinfo
+next-env.d.ts
+.env*
+servers.json
