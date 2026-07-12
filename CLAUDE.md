@@ -9,7 +9,8 @@
 
 - **M1 ✅** 灰盒三联动实测：3 路由 = 3 段贝塞尔弧线运镜、滚动推轨、前进后退倒放、深链接硬切、60fps
 - **M2 ✅** 大厅换成烘焙房间「蓝猫工坊」：Blender headless 烘焙 → WebP 压缩 240KB；Lighthouse 四项全 100
-- **M3 待办** studio/life 两房间按 M2 管线量产 + 微交互运动语言令牌
+- **M3 ✅** 三房间全烘焙（studio 制作间 / life 榻榻米茶间，各 ~200KB，`tools/bake_lib.py` 共享管线）+ 运动语言令牌（`lib/motion.ts` + CSS 变量 + reveal 进场）；灰盒降级为 Suspense 回退
+- **复刻完成**。后续可选：KTX2 压缩、移动端调优、三语化（trilingualize skill）
 
 ## 运行
 
