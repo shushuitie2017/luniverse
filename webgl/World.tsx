@@ -5,6 +5,13 @@ import { ROOMS } from '@/lib/rooms'
 import { BASE_PATH } from '@/lib/base-path'
 import { BakedRoom } from './BakedRoom'
 
+// 路由 → 烘焙资产名（public/models/<name>.glb，产自 tools/bake_*.py）
+const MODELS: Record<string, string> = {
+  '/': 'workshop',
+  '/studio': 'studio',
+  '/life': 'life',
+}
+
 // 灰盒世界：三个房间共享一个连续地面，先证明骨架成立，再谈质感（M2 换烘焙资产）
 function GreyBoxRoom({
   center,
@@ -77,16 +84,17 @@ export function World() {
         <boxGeometry args={[6, 0.06, 2.4]} />
         <meshStandardMaterial color="#262a32" />
       </mesh>
-      {/* 大厅 = 烘焙房间（M2 首航），加载期间回退灰盒 */}
-      <Suspense
-        fallback={
-          <GreyBoxRoom center={ROOMS[0].center} accent={ROOMS[0].accent} />
-        }
-      >
-        <BakedRoom url={`${BASE_PATH}/models/workshop.glb`} position={ROOMS[0].center.map((v, i) => (i === 1 ? 0 : v)) as [number, number, number]} />
-      </Suspense>
-      {ROOMS.slice(1).map((room) => (
-        <GreyBoxRoom key={room.path} center={room.center} accent={room.accent} />
+      {/* 三个房间全部烘焙化（M3），加载期间回退灰盒 */}
+      {ROOMS.map((room) => (
+        <Suspense
+          key={room.path}
+          fallback={<GreyBoxRoom center={room.center} accent={room.accent} />}
+        >
+          <BakedRoom
+            url={`${BASE_PATH}/models/${MODELS[room.path]}.glb`}
+            position={[room.center[0], 0, room.center[2]]}
+          />
+        </Suspense>
       ))}
     </>
   )

@@ -6,6 +6,7 @@ import * as THREE from 'three'
 import gsap from 'gsap'
 import { useStore } from '@/lib/store'
 import { normalizeRoute } from '@/lib/base-path'
+import { MOTION } from '@/lib/motion'
 import { roomByPath, type Room } from '@/lib/rooms'
 
 const easeScroll = (p: number) => p * p * (3 - 2 * p) // smoothstep
@@ -63,8 +64,8 @@ export function CameraRig() {
       tween.current?.kill()
       tween.current = gsap.to(r, {
         t: 1,
-        duration: 1.8,
-        ease: 'power2.inOut',
+        duration: MOTION.dur.flight,
+        ease: MOTION.ease.gsapFlight,
         overwrite: true,
       })
     })

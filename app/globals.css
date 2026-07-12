@@ -3,6 +3,11 @@
   --text: #d8d3c8;
   --text-dim: #8b8678;
   --line: #2e333c;
+  /* 运动语言令牌（与 lib/motion.ts 数值一致） */
+  --ease-luni: cubic-bezier(0.32, 0, 0.15, 1);
+  --dur-fast: 0.2s;
+  --dur-base: 0.4s;
+  --dur-slow: 0.8s;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -52,13 +57,13 @@ body {
   font-size: 14px;
   border: 1px solid transparent;
   border-radius: 3px;
-  transition: color 0.3s, border-color 0.3s;
+  transition: color var(--dur-fast) var(--ease-luni), border-color var(--dur-fast) var(--ease-luni);
 }
 .nav-links a .dot {
   width: 8px; height: 8px; border-radius: 50%;
   background: var(--accent);
   opacity: 0.5;
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity var(--dur-base) var(--ease-luni), transform var(--dur-base) var(--ease-luni);
 }
 .nav-links a .en { font-size: 10px; letter-spacing: 0.2em; opacity: 0.6; }
 .nav-links a:hover { color: var(--text); }
@@ -79,6 +84,18 @@ body {
 .section .block {
   max-width: 520px;
   pointer-events: auto;
+  /* reveal 进场：由 ClientShell 的 IntersectionObserver 加 .on */
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity var(--dur-slow) var(--ease-luni), transform var(--dur-slow) var(--ease-luni);
+}
+.section .block.on {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .section .block { opacity: 1; transform: none; transition: none; }
+  .nav-links a, .nav-links a .dot { transition: none; }
 }
 .section.right { align-items: flex-end; }
 .eyebrow {

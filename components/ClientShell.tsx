@@ -49,6 +49,24 @@ export function ClientShell({ children }: { children: ReactNode }) {
     useStore.getState().setScrollProgress(0)
   }, [pathname, setRoute])
 
+  // 运动语言：文字块滚动进场（CSS 驱动，io 只负责加 .on）
+  useEffect(() => {
+    const blocks = document.querySelectorAll('.block')
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add('on')
+            io.unobserve(e.target)
+          }
+        }
+      },
+      { threshold: 0.15 }
+    )
+    blocks.forEach((b) => io.observe(b))
+    return () => io.disconnect()
+  }, [pathname])
+
   return (
     <>
       <WebGLCanvas />
